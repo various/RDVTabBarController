@@ -26,7 +26,9 @@
 
 @interface RDVTabBar ()
 
-@property (nonatomic) CGFloat itemWidth;
+@property (nonatomic) CGFloat categoryItemWidth;
+@property (nonatomic) CGFloat nonCategoryItemWidth;
+
 @property (nonatomic) UIView *backgroundView;
 
 @end
@@ -67,34 +69,61 @@
     [[self backgroundView] setFrame:CGRectMake(0, frameSize.height - minimumContentHeight,
                                             frameSize.width, frameSize.height)];
     
-    [self setItemWidth:roundf((frameSize.width - [self contentEdgeInsets].left -
-                               [self contentEdgeInsets].right) / [[self items] count])];
+//    [self setItemWidth:roundf((frameSize.width - [self contentEdgeInsets].left -
+//                               [self contentEdgeInsets].right) / [[self items] count])];
     
-    NSInteger index = 0;
+    float categoryItemWidth = ((frameSize.width * (2048 - 605))/2048) / 8;
+    float nonCategoryItemWidth = ((frameSize.width * (605))/2048) / 2;
+    [self setCategoryItemWidth:categoryItemWidth];
+    [self setNonCategoryItemWidth:nonCategoryItemWidth];
+
     
     // Layout items
-    
-    for (RDVTabBarItem *item in [self items]) {
+    NSArray *itemsArray = [self items];
+    for (int i = 0; i < itemsArray.count; i++) {
+        RDVTabBarItem *item = [itemsArray objectAtIndex:i];
         CGFloat itemHeight = [item itemHeight];
         
         if (!itemHeight) {
             itemHeight = frameSize.height;
         }
         
-        [item setFrame:CGRectMake(self.contentEdgeInsets.left + (index * self.itemWidth),
-                                  roundf(frameSize.height - itemHeight) - self.contentEdgeInsets.top,
-                                  self.itemWidth, itemHeight - self.contentEdgeInsets.bottom)];
-        [item setNeedsDisplay];
         
-        index++;
+        if (i < 8) {
+            [item setFrame:CGRectMake(self.contentEdgeInsets.left + (i * self.categoryItemWidth),
+                                      roundf(frameSize.height - itemHeight) - self.contentEdgeInsets.top,
+                                      self.categoryItemWidth, itemHeight - self.contentEdgeInsets.bottom)];
+            NSLog(@"%@",NSStringFromCGRect(CGRectMake(self.contentEdgeInsets.left + (i * self.categoryItemWidth),
+                                                      roundf(frameSize.height - itemHeight) - self.contentEdgeInsets.top,
+                                                      self.categoryItemWidth, itemHeight - self.contentEdgeInsets.bottom)));
+        }else{
+            [item setFrame:CGRectMake(self.categoryItemWidth * 8 + ((i-8) * self.nonCategoryItemWidth),
+                                      roundf(frameSize.height - itemHeight) - self.contentEdgeInsets.top,
+                                      self.nonCategoryItemWidth, itemHeight - self.contentEdgeInsets.bottom)];
+            NSLog(@"%@",NSStringFromCGRect(CGRectMake(self.categoryItemWidth * 8 + (i * self.nonCategoryItemWidth),
+                                                      roundf(frameSize.height - itemHeight) - self.contentEdgeInsets.top,
+                                                      self.nonCategoryItemWidth, itemHeight - self.contentEdgeInsets.bottom)));
+        }
+
+        
+        [item setNeedsDisplay];
+
     }
+
 }
 
 #pragma mark - Configuration
 
-- (void)setItemWidth:(CGFloat)itemWidth {
-    if (itemWidth > 0) {
-        _itemWidth = itemWidth;
+
+- (void)setCategoryItemWidth:(CGFloat)categoryItemWidth {
+    if (categoryItemWidth > 0) {
+        _categoryItemWidth = categoryItemWidth;
+    }
+}
+
+- (void)setNonCategoryItemWidth:(CGFloat)nonCategoryItemWidth {
+    if (nonCategoryItemWidth > 0) {
+        _nonCategoryItemWidth = nonCategoryItemWidth;
     }
 }
 

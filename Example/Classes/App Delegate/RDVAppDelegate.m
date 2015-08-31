@@ -58,9 +58,36 @@
     UIViewController *thirdNavigationController = [[UINavigationController alloc]
                                                    initWithRootViewController:thirdViewController];
     
+    UIViewController *thirdViewController4 = [[RDVThirdViewController alloc] init];
+    UIViewController *thirdNavigationController4 = [[UINavigationController alloc]
+                                                   initWithRootViewController:thirdViewController4];
+    UIViewController *thirdViewController5 = [[RDVThirdViewController alloc] init];
+    UIViewController *thirdNavigationController5 = [[UINavigationController alloc]
+                                                   initWithRootViewController:thirdViewController5];
+    
+    UIViewController *thirdViewController6 = [[RDVThirdViewController alloc] init];
+    UIViewController *thirdNavigationController6 = [[UINavigationController alloc]
+                                                   initWithRootViewController:thirdViewController6];
+    
+    UIViewController *thirdViewController7 = [[RDVThirdViewController alloc] init];
+    UIViewController *thirdNavigationController7 = [[UINavigationController alloc]
+                                                   initWithRootViewController:thirdViewController7];
+    
+    UIViewController *thirdViewController8 = [[RDVThirdViewController alloc] init];
+    UIViewController *thirdNavigationController8 = [[UINavigationController alloc]
+                                                   initWithRootViewController:thirdViewController8];
+    
+    UIViewController *thirdViewController9 = [[RDVThirdViewController alloc] init];
+    UIViewController *thirdNavigationController9 = [[UINavigationController alloc]
+                                                   initWithRootViewController:thirdViewController9];
+    
+    UIViewController *thirdViewController10 = [[RDVThirdViewController alloc] init];
+    UIViewController *thirdNavigationController10 = [[UINavigationController alloc]
+                                                   initWithRootViewController:thirdViewController10];
+    
     RDVTabBarController *tabBarController = [[RDVTabBarController alloc] init];
     [tabBarController setViewControllers:@[firstNavigationController, secondNavigationController,
-                                           thirdNavigationController]];
+                                           thirdNavigationController,thirdNavigationController4,thirdNavigationController5,thirdNavigationController6,thirdNavigationController7,thirdNavigationController8,thirdNavigationController9,thirdNavigationController10]];
     self.viewController = tabBarController;
     
     [self customizeTabBarForController:tabBarController];
@@ -69,7 +96,7 @@
 - (void)customizeTabBarForController:(RDVTabBarController *)tabBarController {
     UIImage *finishedImage = [UIImage imageNamed:@"tabbar_selected_background"];
     UIImage *unfinishedImage = [UIImage imageNamed:@"tabbar_normal_background"];
-    NSArray *tabBarItemImages = @[@"first", @"second", @"third"];
+    NSArray *tabBarItemImages = @[@"first", @"second", @"third",@"third",@"third",@"third",@"third",@"third",@"third",@"third"];
     
     NSInteger index = 0;
     for (RDVTabBarItem *item in [[tabBarController tabBar] items]) {
